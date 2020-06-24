@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Assertions.Must;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MassV3 : MonoBehaviour {
@@ -7,22 +6,21 @@ public class MassV3 : MonoBehaviour {
 
     public float density;
     public float diameter;
-    public int trajectorySegments = 1000;
+    public float mass;
 
     [SerializeField]
-    private float velocity, acceleration, mass;
+    private float velocity, acceleration;
+    private Vector3 velocity3D;
 
     private MassV3[] masses;
 
     private Rigidbody rb;
-    public LineRenderer lineRenderer;
     public Constants consts;
 
-    private void Start() {
-        mass = CalculateMass(density, diameter);
-
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = trajectorySegments;
+	private void Start() {
+        if (!(density == 0 && diameter == 0)) {
+            mass = CalculateMass(density, diameter);
+        }
 
         rb = GetComponent<Rigidbody>();
         rb.useGravity = false;
@@ -39,6 +37,7 @@ public class MassV3 : MonoBehaviour {
         }
 
         velocity = rb.velocity.magnitude;
+        velocity3D = rb.velocity;
         Debug.DrawLine(transform.position, transform.position + rb.velocity.normalized * rb.velocity.magnitude, Color.blue);
     }
 
@@ -60,7 +59,7 @@ public class MassV3 : MonoBehaviour {
         return pDensity * 4 / 3 * Mathf.PI * Mathf.Pow(pDiameter/2, 3);
 	}
 
-    private Vector3 CalculateTrajectorySegmentPosition(Vector3 pInitVelocity, float time) {
-        Vector3 trajectorySegment = transform
+    public Vector3 GetVelocity() {
+        return velocity3D;
 	}
 }
