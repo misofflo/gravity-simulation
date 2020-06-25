@@ -7,8 +7,28 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: cb2787092b56a4048b639c6e698c6ddb, type: 2}
+      name: BodyMat
+    second: {fileID: 2100000, guid: 3b3776226b1148042828842a75e7a231, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LegsMat
+    second: {fileID: 2100000, guid: bd7977da516d5414a8275bf671bcb63c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: NozleMat
+    second: {fileID: 2100000, guid: 37e20e63e5ad7c642951bc01cbf56f05, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PadsMat
+    second: {fileID: 2100000, guid: 8621bcfa30d777848a773105cd64e3f3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ThrustersMat
+    second: {fileID: 2100000, guid: 766415dd05c64fa4a9bc2c115e637a12, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
