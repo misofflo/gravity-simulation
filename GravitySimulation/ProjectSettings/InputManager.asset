@@ -292,7 +292,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 0
-    joyNum: 1
+    joyNum: 2
   - serializedVersion: 3
     m_Name: Pitch
     descriptiveName: 
@@ -308,7 +308,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 1
-    joyNum: 1
+    joyNum: 2
   - serializedVersion: 3
     m_Name: ThrustL
     descriptiveName: 
@@ -324,7 +324,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 0
-    joyNum: 2
+    joyNum: 1
   - serializedVersion: 3
     m_Name: ThrustR
     descriptiveName: 
@@ -340,7 +340,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 1
-    joyNum: 2
+    joyNum: 1
   - serializedVersion: 3
     m_Name: ThrustersX
     descriptiveName: 
@@ -356,7 +356,7 @@ InputManager:
     invert: 0
     type: 2
     axis: 2
-    joyNum: 1
+    joyNum: 2
   - serializedVersion: 3
     m_Name: ThrustersY
     descriptiveName: 
@@ -372,7 +372,7 @@ InputManager:
     invert: 1
     type: 2
     axis: 3
-    joyNum: 1
+    joyNum: 2
   - serializedVersion: 3
     m_Name: Yaw
     descriptiveName: 
@@ -388,4 +388,4 @@ InputManager:
     invert: 1
     type: 2
     axis: 2
-    joyNum: 2
+    joyNum: 1

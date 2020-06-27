@@ -13,7 +13,7 @@ public class MassV2 : MonoBehaviour {
 
     public Rigidbody rb;
 
-    public Constants consts;
+    public Universe universe;
 
 	private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -41,7 +41,7 @@ public class MassV2 : MonoBehaviour {
         float distance = gravDir.magnitude;
 
         // gravitational force between masses
-        float Fg = consts.G * m1 * m2 / Mathf.Pow(distance, 2) * consts.gravMultiplier;
+        float Fg = Universe.G * m1 * m2 / Mathf.Pow(distance, 2) * universe.gravMultiplier;
 
         acceleration = Fg / mass;
         rbToAccelerate.AddForce(gravDir * Fg);
