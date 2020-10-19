@@ -2,65 +2,60 @@
 
 [RequireComponent(typeof(Rigidbody))]
 public class CelestialObject : MonoBehaviour {
-    // FIELDS
+    // attributes
+    public float mass;
+    public float radius;
+    public float surfaceGravity;
 
-	// rigidbody of this object applying the built-in physics system from Unity
-    private Rigidbody rb;
+    public Vector3 initialVelocity = new Vector3(0, 0, 0);
 
-	public Vector3 initialVelocity;
+    private Vector3 currentVelocity;
 
-	// FUNCTIONS
+    private new Rigidbody rigidbody;
 
-	// called once at the first frame
-	private void Start() {
-		SetupRigidbody();
-		rb.AddForce(initialVelocity, ForceMode.Force);
-	}
+    private void Awake() {
+        rigidbody = GetComponent<Rigidbody>();
+        rigidbody.useGravity = false;
+        rigidbody.angularDrag = 0;
+        rigidbody.drag = 0;
+        mass = (mass == 0) ? CalculateMass() : mass;
+        surfaceGravity = (surfaceGravity == 0) ? CalculateSurfaceGravity() : surfaceGravity;
 
-	// called every physics timestep
-	private void FixedUpdate() {
-		ApplyGravitationalField();
-	}
+        rigidbody.mass = mass;
+        currentVelocity = initialVelocity;
+    }
 
-	// applying the gravitational field of this object to every other celestial object in the scene
-	private void ApplyGravitationalField() {
-		// finding all celestial objects in the scene and storing them in an array
-		CelestialObject[] objects = FindObjectsOfType<CelestialObject>();
-		// looping over all objects and attracting them the this object
-		foreach (CelestialObject obj in objects) {
-			if (obj != this) {
-				// attract object
-				AttractObject(obj);
-			}
+	// functions
+	public void UpdateVelocity(CelestialObject[] allBodies, float timeStep) {
+        foreach (CelestialObject other in allBodies) {
+            if (other != this) {
+                float distanceSquared = (other.rigidbody.position - rigidbody.position).sqrMagnitude;
+                Vector3 forceDirection = (other.rigidbody.position - rigidbody.position).normalized;
+                Vector3 force = forceDirection * Universe.gravitationalConstant * rigidbody.mass * other.rigidbody.mass / distanceSquared;
+                Vector3 acceleration = force / mass;
+
+                currentVelocity += acceleration / timeStep;
+            }
 		}
 	}
 
-	// attracting a single given celestial object
-	private void AttractObject(CelestialObject other) {
-		// calculating the direction of the gravitational force
-		Vector3 gravDir = transform.position - other.transform.position;
-		// calculating the magnitude of the force
-		float gravitationalForce = Universe.gravitationalConstant * rb.mass * other.rb.mass / Mathf.Pow(gravDir.magnitude, 2);
-
-		// applying the force to the other object
-		other.rb.AddForce(gravDir.normalized * gravitationalForce, ForceMode.Force);
+    public void UpdateVelocity(Vector3 acceleration, float timeStep) {
+        currentVelocity += acceleration * timeStep;
 	}
 
-	// setting up all initatial values of the rigidbody
-	private void SetupRigidbody() {
-		rb = GetComponent<Rigidbody>();
-		rb.useGravity = false;
-		rb.angularDrag = 0;
-		rb.drag = 0;
+    public void UpdatePosition(float timeStep) {
+        rigidbody.position += currentVelocity * timeStep;
 	}
 
-	// GETTER
-	public Rigidbody GetRigidbody() {
-		return rb;
+    private float CalculateMass() {
+        return surfaceGravity * radius * radius / Universe.gravitationalConstant;
 	}
 
-	// SETTER
-	public void SetMass(float m) {
-		rb.mass = m;
+    private float CalculateSurfaceGravity() {
+        return Universe.gravitationalConstant * rigidbody.mass / (radius * radius);
+	}
+
+    public Vector3 getCurrentVelocity() {
+        return currentVelocity;
 	}
 }
