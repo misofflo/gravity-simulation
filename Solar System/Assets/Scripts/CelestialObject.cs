@@ -7,11 +7,14 @@ public class CelestialObject : MonoBehaviour {
 	// rigidbody of this object applying the built-in physics system from Unity
     private Rigidbody rb;
 
+	public Vector3 initialVelocity;
+
 	// FUNCTIONS
 
 	// called once at the first frame
 	private void Start() {
 		SetupRigidbody();
+		rb.AddForce(initialVelocity, ForceMode.Force);
 	}
 
 	// called every physics timestep
@@ -37,7 +40,7 @@ public class CelestialObject : MonoBehaviour {
 		// calculating the direction of the gravitational force
 		Vector3 gravDir = transform.position - other.transform.position;
 		// calculating the magnitude of the force
-		float gravitationalForce = Universe.gravitationalConstant * rb.mass * other.GetRigidbody().mass / Mathf.Pow(gravDir.magnitude, 2);
+		float gravitationalForce = Universe.gravitationalConstant * rb.mass * other.rb.mass / Mathf.Pow(gravDir.magnitude, 2);
 
 		// applying the force to the other object
 		other.rb.AddForce(gravDir.normalized * gravitationalForce, ForceMode.Force);
