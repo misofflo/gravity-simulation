@@ -41,7 +41,7 @@ public class CelestialObject : MonoBehaviour {
 
     public void UpdateVelocity(Vector3 acceleration, float timeStep) {
         currentVelocity += acceleration * timeStep;
-	}
+    }
 
     public void UpdatePosition(float timeStep) {
         rigidbody.position += currentVelocity * timeStep;
