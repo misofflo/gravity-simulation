@@ -9,8 +9,10 @@ public class CelestialObject : MonoBehaviour {
 
     public Vector3 initialVelocity = new Vector3(0, 0, 0);
 
+    [SerializeField]
     private Vector3 currentVelocity;
 
+    [SerializeField]
     private new Rigidbody rigidbody;
 
     private void Awake() {
