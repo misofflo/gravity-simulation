@@ -1,63 +1,44 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class CelestialObject : MonoBehaviour {
     // attributes
-    public float mass;
-    public float radius;
-    public float surfaceGravity;
-
-    public Vector3 initialVelocity = new Vector3(0, 0, 0);
+    [SerializeField]
+    private float mass = 1;
 
     [SerializeField]
-    private Vector3 currentVelocity;
+    private Vector3 initialVelocity = new Vector3(0, 0, 0);
 
     [SerializeField]
-    private new Rigidbody rigidbody;
+    private Vector3 velocity;
 
-    private void Awake() {
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.useGravity = false;
-        rigidbody.angularDrag = 0;
-        rigidbody.drag = 0;
-        mass = (mass == 0) ? CalculateMass() : mass;
-        surfaceGravity = (surfaceGravity == 0) ? CalculateSurfaceGravity() : surfaceGravity;
-
-        rigidbody.mass = mass;
-        currentVelocity = initialVelocity;
-    }
+	private void Awake() {
+        velocity = initialVelocity;
+	}
 
 	// functions
 	public void UpdateVelocity(CelestialObject[] allBodies, float timeStep) {
         foreach (CelestialObject other in allBodies) {
             if (other != this) {
-                float distanceSquared = (other.rigidbody.position - rigidbody.position).sqrMagnitude;
-                Vector3 forceDirection = (other.rigidbody.position - rigidbody.position).normalized;
-                Vector3 force = forceDirection * Universe.gravitationalConstant * rigidbody.mass * other.rigidbody.mass / distanceSquared;
+                float distanceSquared = (other.transform.position - transform.position).sqrMagnitude;
+                Vector3 forceDirection = (other.transform.position - transform.position).normalized;
+                Vector3 force = forceDirection * Universe.gravitationalConstant * mass * other.mass / distanceSquared;
                 Vector3 acceleration = force / mass;
 
-                currentVelocity += acceleration / timeStep;
+                velocity += acceleration / timeStep;
             }
 		}
+        
 	}
-
-    public void UpdateVelocity(Vector3 acceleration, float timeStep) {
-        currentVelocity += acceleration * timeStep;
-    }
 
     public void UpdatePosition(float timeStep) {
-        rigidbody.position += currentVelocity * timeStep;
+        transform.Translate(velocity * timeStep);
 	}
 
-    private float CalculateMass() {
-        return surfaceGravity * radius * radius / Universe.gravitationalConstant;
+    public float GetMass() {
+        return mass;
 	}
 
-    private float CalculateSurfaceGravity() {
-        return Universe.gravitationalConstant * rigidbody.mass / (radius * radius);
-	}
-
-    public Vector3 getCurrentVelocity() {
-        return currentVelocity;
+    public Vector3 GetVelocity() {
+        return velocity;
 	}
 }
