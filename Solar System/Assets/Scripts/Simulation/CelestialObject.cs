@@ -6,14 +6,7 @@ public class CelestialObject : MonoBehaviour {
     private float mass = 1;
 
     [SerializeField]
-    private Vector3 initialVelocity = new Vector3(0, 0, 0);
-
-    [SerializeField]
     private Vector3 velocity;
-
-	private void Awake() {
-        velocity = initialVelocity;
-	}
 
 	// functions
 	public void UpdateVelocity(CelestialObject[] allBodies, float timeStep) {

@@ -2,76 +2,39 @@
 
 [ExecuteInEditMode]
 public class OrbitVisualizer : MonoBehaviour {
-	private CelestialObject[] allBodies;
-
 	private float timeStep = Universe.physicsTimeStep;
 	[SerializeField]
 	private int iterations = 1000;
 
-	[SerializeField]
-	private int focus = 0;
-
 	private void Update() {
-		if (focus != 0) {
-			DrawOrbits(focus);
-		} else {
-			DrawOrbits();
-		}
+		DrawOrbits();
 	}
 
 	private void DrawOrbits() {
-		allBodies = FindObjectsOfType<CelestialObject>();
+		CelestialObject[] allBodies = FindObjectsOfType<CelestialObject>();
 		VirtualBody[] allVirtualBodies = new VirtualBody[allBodies.Length];
-		Vector3[] drawPoint = new Vector3[iterations];
+		Vector3[] drawPoints = new Vector3[iterations];
 
-		// initialize virtual bodies
+		// Update virtual bodies
 		for (int i = 0; i < allBodies.Length; i++) {
 			allVirtualBodies[i] = new VirtualBody(allBodies[i]);
 		}
 
-		foreach (VirtualBody body in allVirtualBodies) {
+		foreach (VirtualBody vBody in allVirtualBodies) {
 			// simulate
 			for (int i = 0; i < iterations; i++) {
 				// updating velocity of selected body
-				body.UpdateVelocity(allVirtualBodies, timeStep);
+				vBody.UpdateVelocity(allVirtualBodies, timeStep);
 
 				// updating position
-				body.UpdatePosition(timeStep);
-				drawPoint[i] = body.position;
+				vBody.UpdatePosition(timeStep);
+				drawPoints[i] = vBody.position;
 			}
 
 			// draw orbit
 			for (int i = 0; i < iterations - 1; i++) {
-				Debug.DrawLine(drawPoint[i], drawPoint[i + 1], body.pathColor);
+				Debug.DrawLine(drawPoints[i], drawPoints[i + 1], vBody.pathColor);
 			}
-		}
-	}
-
-	private void DrawOrbits(int index) {
-		allBodies = FindObjectsOfType<CelestialObject>();
-		VirtualBody[] allVirtualBodies = new VirtualBody[allBodies.Length];
-		Vector3[] drawPoint = new Vector3[iterations];
-
-		index -= 1;
-
-		// initialize virtual bodies
-		for (int i = 0; i < allBodies.Length; i++) {
-			allVirtualBodies[i] = new VirtualBody(allBodies[i]);
-		}
-
-		// simulate
-		for (int i = 0; i < iterations; i++) {
-			// updating velocity of selected body
-			allVirtualBodies[index].UpdateVelocity(allVirtualBodies, timeStep);
-
-			// updating position
-			allVirtualBodies[index].UpdatePosition(timeStep);
-			drawPoint[i] = allVirtualBodies[index].position;
-		}
-
-		// draw orbit
-		for (int i = 0; i < iterations - 1; i++) {
-			Debug.DrawLine(drawPoint[i], drawPoint[i + 1], allVirtualBodies[index].pathColor);
 		}
 	}
 
@@ -92,9 +55,8 @@ public class OrbitVisualizer : MonoBehaviour {
 				if (other != this) {
 					float distanceSquared = (other.position - position).sqrMagnitude;
 					Vector3 forceDirection = (other.position - position).normalized;
-					Vector3 force = forceDirection * Universe.gravitationalConstant * mass * other.mass / distanceSquared;
-					Vector3 acceleration = force / mass;
-
+					Vector3 acceleration = forceDirection * Universe.gravitationalConstant * other.mass / distanceSquared;
+					
 					velocity += acceleration / timeStep;
 				}
 			}
