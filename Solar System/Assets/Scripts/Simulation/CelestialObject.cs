@@ -14,13 +14,11 @@ public class CelestialObject : MonoBehaviour {
             if (other != this) {
                 float distanceSquared = (other.transform.position - transform.position).sqrMagnitude;
                 Vector3 forceDirection = (other.transform.position - transform.position).normalized;
-                Vector3 force = forceDirection * Universe.gravitationalConstant * mass * other.mass / distanceSquared;
-                Vector3 acceleration = force / mass;
+                Vector3 acceleration = forceDirection * Universe.gravitationalConstant * other.mass / distanceSquared;
 
                 velocity += acceleration / timeStep;
             }
 		}
-        
 	}
 
     public void UpdatePosition(float timeStep) {
