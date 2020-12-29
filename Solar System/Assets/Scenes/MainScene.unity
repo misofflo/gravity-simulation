@@ -340,7 +340,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017377038}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1587, y: 0, z: 0}
+  m_LocalPosition: {x: 1671, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 1572269549}
@@ -358,8 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd8d446052c3ea448bd3d35d1b45e83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mass: 1
-  velocity: {x: 0, y: 0, z: 103.4}
+  mass: 100
+  velocity: {x: 0, y: 103.4, z: 0}
 --- !u!135 &1017377042
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -770,7 +770,7 @@ MonoBehaviour:
   m_AreaLightShape: 0
   m_Intensity: 0.05
   m_EnableSpotReflector: 0
-  m_LuxAtDistance: 1500
+  m_LuxAtDistance: 500
   m_InnerSpotPercent: 0
   m_LightDimmer: 1
   m_VolumetricDimmer: 1
@@ -871,7 +871,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 112500
+  m_Intensity: 12500
   m_Range: 10000
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mass: 100
-  velocity: {x: 0, y: 0, z: -116.1}
+  velocity: {x: 0, y: -135.72, z: 0}
 --- !u!135 &1377359504
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218bfe6ffb5e63b40878461d06fdf8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 5000
+  iterations: 10000
 --- !u!1 &1931127266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1119,7 +1119,7 @@ Transform:
   m_GameObject: {fileID: 1931127266}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1500, y: 1500, z: 1500}
+  m_LocalScale: {x: 500, y: 500, z: 500}
   m_Children:
   - {fileID: 1292204653}
   m_Father: {fileID: 1572269549}
